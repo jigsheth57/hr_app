@@ -1,0 +1,10 @@
+---
+applications:
+- name: hr_app
+memory: 256M
+instances: 1
+path: .
+command: bundle exec rake db:migrate && bundle exec rails s -p $PORT
+services:
+- rails-mysql
+- rails-rabbitmq

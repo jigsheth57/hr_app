@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Employee Listing</h1>
+
+<style type="text/css">
+.tftable {font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #a9a9a9;border-collapse: collapse;}
+.tftable th {font-size:12px;background-color:#b8b8b8;border-width: 1px;padding: 8px;border-style: solid;border-color: #a9a9a9;text-align:left;}
+.tftable tr {background-color:#ffffff;}
+.tftable td {font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color: #a9a9a9;}
+.tftable tr:hover {background-color:#ffff99;}
+</style>
+
+<table class="tftable" "cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Hiredate</th>
+      <th>Salary</th>
+      <th>Fulltime</th>
+      <th>Vacationdays</th>
+      <th>Comments</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.name %></td>
+        <td><%= employee.hiredate %></td>
+        <td><%= employee.salary %></td>
+        <td><%= employee.fulltime %></td>
+        <td><%= employee.vacationdays %></td>
+        <td><%= employee.comments %></td>
+        <td><%= link_to image_tag('view.png', :border => 0, :width => 15, :height => 15, :crop => :fill, :alt => "View"), employee %> | <%= link_to image_tag('edit.png', :border => 0, :width => 15, :height => 15, :crop => :fill, :alt => "Edit"), edit_employee_path(employee) %> | <%= link_to image_tag('delete.png', :border => 0, :width => 15, :height => 15, :crop => :fill, :alt => "Remove"), employee, method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to image_tag('new.png', :border => 0, :width => 15, :height => 15, :crop => :fill, :alt => "New Employee"), new_employee_path %> <span style="font-size:12px;">Add New Employee</span>

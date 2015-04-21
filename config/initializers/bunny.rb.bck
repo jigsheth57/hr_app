@@ -1,0 +1,36 @@
+require 'json'
+
+
+if ENV['VCAP_SERVICES']
+    $vcap_services ||= JSON.parse(ENV['VCAP_SERVICES'])
+    rabbit_service_name = $vcap_services.keys.find { |svc| svc =~ /rails-rabbitmq/i }
+    rabbit_service = $vcap_services[rabbit_service_name].first
+    $rabbit_url = rabbit_service['credentials']['url']
+else
+    $rabbit_url = "amqp://guest:guest@localhost:5672"
+end
+
+def amqp_url
+    services = JSON.parse(ENV['VCAP_SERVICES'], :symbolize_names => true)
+    url = services.values.map do |srvs|
+        srvs.map do |srv|
+            if srv[:credentials][:uri] =~ /^amqp/
+                srv[:credentials][:uri]
+                else
+                []
+            end
+        end
+    end.flatten!.first
+end
+
+puts "amqp_url is #{@amqp_url.present?}"
+
+if(!@amqp_url.present?)
+    amqp_url = "amqp://guest:guest@localhost:5672"
+end
+$conn = Bunny.new(amqp_url)
+$conn.start
+
+dest = $conn.create_channel
+$dyn_queue = dest.queue("hr-app.cfapps.io.employee", :auto_delete => true)
+$exch = dest.default_exchange

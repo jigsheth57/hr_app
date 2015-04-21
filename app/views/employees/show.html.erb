@@ -1,0 +1,35 @@
+<h1>Employee Information</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @employee.name %>
+</p>
+
+<p>
+  <strong>Hiredate:</strong>
+  <%= @employee.hiredate %>
+</p>
+
+<p>
+  <strong>Salary:</strong>
+  <%= @employee.salary %>
+</p>
+
+<p>
+  <strong>Fulltime:</strong>
+  <%= @employee.fulltime %>
+</p>
+
+<p>
+  <strong>Vacationdays:</strong>
+  <%= @employee.vacationdays %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @employee.comments %>
+</p>
+
+<%= link_to 'Edit', edit_employee_path(@employee) %> |
+<%= link_to 'Back', employees_path %>
